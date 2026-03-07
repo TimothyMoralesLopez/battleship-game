@@ -1,8 +1,12 @@
 class Ship {
-  constructor(length) {
+  constructor(length, startingX, startingY, endingX, endingY) {
     this.length = length;
     this.hits = 0;
     this.sunk = false; 
+    this.startingX = startingX;
+    this.startingY = startingY;
+    this.endingX = endingX;
+    this.endingY = endingY; 
   }
 
   hit() {
@@ -16,7 +20,6 @@ class Ship {
       this.sunk = true; 
     }
   }
-
 }
 
 export { Ship }; 
