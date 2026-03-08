@@ -7,6 +7,7 @@ class Ship {
     this.startingY = startingY;
     this.endingX = endingX;
     this.endingY = endingY; 
+    this.coordsArray = [];
   }
 
   hit() {

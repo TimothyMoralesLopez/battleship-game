@@ -45,7 +45,7 @@ test("Gameboard Class placeShip function places a Ship at the given coordinates"
   testGameboard.placeShip(2, 0, 0, 0, 1); 
   console.table(testGameboard.grid); 
   expect(testGameboard.grid).toEqual([
-    [1 , 1, 0, 0, 0, 0, 0, 0, 0, 0], 
+    [1, 1, 0, 0, 0, 0, 0, 0, 0, 0], 
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 

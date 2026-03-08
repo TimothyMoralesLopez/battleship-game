@@ -10,10 +10,10 @@ class Gameboard {
       }
     }
     this.grid = grid; 
+    this.shipsArray = [];
   }
 
   getShipOrientation(ship) {
-
     // if ship is horizontal 
     if (Math.abs(ship.endingX - ship.startingX + 1) === ship.length && ship.endingY === ship.startingY) {
       for (let i = 0; i < ship.length; i++) {
@@ -50,6 +50,15 @@ class Gameboard {
         break;
       case 'invalid':
         throw Error("Invalid coordinates! Please try again."); 
+    }
+    this.shipsArray.push(myShip); 
+  }
+
+  receiveAttack(rowCoord, colCoord) {
+    if (this.grid[rowCoord][colCoord] === 1) {
+      for (let i = 0; i < 5; i++) {
+        if (this.shipsArray[i].
+      }
     }
   }
 }
