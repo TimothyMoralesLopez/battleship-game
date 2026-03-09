@@ -1,12 +1,10 @@
 class Ship {
-  constructor(length, startingX, startingY, endingX, endingY) {
+  constructor(length, start, end) {
     this.length = length;
     this.hits = 0;
     this.sunk = false; 
-    this.startingX = startingX;
-    this.startingY = startingY;
-    this.endingX = endingX;
-    this.endingY = endingY; 
+    this.start = start;
+    this.end = end; 
     this.coordsArray = [];
   }
 

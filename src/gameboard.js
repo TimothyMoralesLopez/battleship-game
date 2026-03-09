@@ -6,18 +6,29 @@ class Gameboard {
     for (let x = 0; x < 10; x++) {
       grid[x] = [];
       for (let y = 0; y < 10; y++) {
-        grid[x][y] = 0;
+        grid[x][y] = '-';
       }
     }
     this.grid = grid; 
     this.shipsArray = [];
   }
 
+  convertShipCoordinates(myCoords) {
+    let myXCoord = 10 - myCoords.charAt(1); 
+    let myYCoord = myCoords.charCodeAt(0) - 65;
+
+    // returns in the format of (0, 0) 
+    return `(${myXCoord}, ${myYCoord})`;
+  }
+
   getShipOrientation(ship) {
     // if ship is horizontal 
-    if (Math.abs(ship.endingX - ship.startingX + 1) === ship.length && ship.endingY === ship.startingY) {
+    let myShipStart = this.convertShipCoordinates(ship.start); 
+    let myShipEnd = this.convertShipCoordinates(ship.end);
+
+    if (Math.abs(myShipEnd[1] - myShipStart[1] + 1) === ship.length && myShipEnd[4] === myShipStart[4]) {
       for (let i = 0; i < ship.length; i++) {
-        if (this.grid[ship.startingX + i][ship.startingY] === 1) {
+        if (Number.isFinite(this.grid[Number(myShipStart[1]) + i][Number(myShipStart[4])])) {
           return 'invalid';
         }
       }
@@ -25,42 +36,48 @@ class Gameboard {
     }
     
     // if ship is vertical
-    if (Math.abs(ship.endingY - ship.startingY + 1) === ship.length && ship.endingX === ship.startingX) {
+    if (Math.abs(myShipEnd[4] - myShipStart[4] + 1) === ship.length && myShipEnd[1] === myShipStart[1]) {
       for (let i = 0; i < ship.length; i++) {
-        if (this.grid[ship.startingX][ship.startingY + i] === 1) {
+        if (Number.isFinite(this.grid[Number(myShipStart[1])][Number(myShipStart[4]) + i])) {
           return 'invalid';
         }
       }
       return 'vertical';
     }
+
+    return 'invalid'; 
   }
 
-  placeShip(shipLength, startX, startY, endX, endY) {
-    let myShip = new Ship(shipLength, startX, startY, endX, endY);
+  placeShip(shipLength, start, end) {
+    let myShip = new Ship(shipLength, start, end);
+    let myShipStart = this.convertShipCoordinates(myShip.start);
+
     switch (this.getShipOrientation(myShip)) {
       case 'horizontal': 
         for (let i = 0; i < myShip.length; i++) {
-          this.grid[myShip.startingX + i][myShip.startingY] = 1;
+          this.grid[Number(myShipStart[1]) + i][Number(myShipStart[4])] = myShip.length;
         }
         break;
       case 'vertical':
         for (let i = 0; i < myShip.length; i++) {
-          this.grid[myShip.startingX][myShip.startingY + i] = 1;
+          this.grid[Number(myShipStart[1])][Number(myShipStart[4]) + i] = myShip.length;
         }
         break;
       case 'invalid':
         throw Error("Invalid coordinates! Please try again."); 
     }
+
     this.shipsArray.push(myShip); 
   }
 
+  /*
   receiveAttack(rowCoord, colCoord) {
     if (this.grid[rowCoord][colCoord] === 1) {
       for (let i = 0; i < 5; i++) {
         if (this.shipsArray[i].
       }
     }
-  }
+  } */ 
 }
 
 export { Gameboard }; 
