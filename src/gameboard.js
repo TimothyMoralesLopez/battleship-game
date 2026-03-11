@@ -56,6 +56,7 @@ class Gameboard {
       case 'horizontal': 
         for (let i = 0; i < myShip.length; i++) {
           this.grid[Number(myShipStart[1]) + i][Number(myShipStart[4])] = myShip.length;
+          myShip.coordsArray[i] = `()`;
         }
         break;
       case 'vertical':
@@ -70,14 +71,26 @@ class Gameboard {
     this.shipsArray.push(myShip); 
   }
 
-  /*
-  receiveAttack(rowCoord, colCoord) {
-    if (this.grid[rowCoord][colCoord] === 1) {
+  receiveAttack(attackCoords) {
+    //attackCoords are in B2 format
+
+    //attackXCoord here is 1
+    let attackXCoord = Number(this.convertShipCoordinates(attackCoords[1])); 
+    //attackYCoord here is 1
+    let attackYCoord = Number(this.convertShipCoordinates(attackCoords[4]));
+
+    if (Number.isFinite(this.grid[[attackXCoord][attackYCoord]])) {
       for (let i = 0; i < 5; i++) {
-        if (this.shipsArray[i].
+        if (this.shipsArray[i].coordsArray.includes(attackCoords)) {
+          this.shipsArray[i].hit();  
+          this.shipsArray[i].coordsArray.push(attackCoords); 
+        }
       }
     }
-  } */ 
+    else {
+      this.grid[attackXCoord][attackYCoord] = '0';  
+    }
+  } 
 }
 
 export { Gameboard }; 
